@@ -21,7 +21,19 @@ def user_tpl():
 def list_users():
     page = int(request.args.get("page", 1))
     per_page = int(request.args.get("per_page", 10))
-    result = service.paginate(page=page, per_page=per_page)
+    # 收集参数
+    params = {
+        "username": request.args.get("username"),
+        "email": request.args.get("email"),
+        "phone": request.args.get("phone"),
+        "status": request.args.get("status"),
+    }
+
+    # 去除空值字段
+    filters = {k: v for k, v in params.items() if v not in (None, "", "null")}
+    print("filters=", filters, type(filters))
+
+    result = service.paginate(page=page, per_page=per_page, filters=filters)
     return jsonify({"code": 200, "msg": "success", "data": result})
 
 

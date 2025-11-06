@@ -29,6 +29,7 @@ class User(db.Model):
             "phone": self.phone,
             "avatar": self.avatar,
             "status": self.status,
+            "status_text": "正常" if self.status == 1 else "异常",
             "created_at": format_time(self.created_at),
             "updated_at": format_time(self.updated_at),
             "deleted_at": format_time(self.deleted_at),

@@ -33,8 +33,13 @@ class BaseService:
         self, page=1, per_page=10, filters=None, order_by=None, desc_order=False
     ):
         query = self.model.query
+        # 动态添加过滤条件
         if filters:
-            query = query.filter_by(**filters)
+            for field, value in filters.items():
+                # 如果模型中有这个字段才过滤
+                if hasattr(self.model, field):
+                    # 模糊搜索
+                    query = query.filter(getattr(self.model, field).like(f"%{value}%"))
         if order_by:
             order_col = getattr(self.model, order_by)
             if desc_order:
@@ -43,6 +48,7 @@ class BaseService:
                 query = query.order_by(order_col)
         pagination = query.paginate(page=page, per_page=per_page, error_out=False)
         counts = handle_page(page, pagination)
+        # counts = pagination.pages
         return {
             "items": [item.to_dict() for item in pagination.items],
             "total": pagination.total,
