@@ -35,5 +35,10 @@ class User(db.Model):
             "deleted_at": format_time(self.deleted_at),
         }
 
+    @classmethod
+    def query_active(cls):
+        """只返回未删除的记录"""
+        return cls.query.filter(cls.deleted_at.is_(None))
+
     def __repr__(self):
         return f"<User {self.username}>"

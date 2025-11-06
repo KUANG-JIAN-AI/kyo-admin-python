@@ -37,6 +37,15 @@ def list_users():
     return jsonify({"code": 200, "msg": "success", "data": result})
 
 
+@user_bp.route("/<int:id>", methods=["DELETE"])
+def delete_user(id):
+    success = service.delete(id)
+    if success:
+        return jsonify({"code": 200, "msg": "删除成功"})
+    else:
+        return jsonify({"code": 400, "msg": "删除失败"})
+
+
 @user_bp.route("/add_test", methods=["GET"])
 def add_test_users():
     """自动生成测试用户数据

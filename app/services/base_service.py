@@ -20,7 +20,7 @@ class BaseService:
 
     # 查询所有
     def all(self, filters=None, order_by=None):
-        query = self.model.query
+        query = self.model.query_active()
         if filters:
             query = query.filter_by(**filters)
         if order_by:
@@ -32,7 +32,7 @@ class BaseService:
     def paginate(
         self, page=1, per_page=10, filters=None, order_by=None, desc_order=False
     ):
-        query = self.model.query
+        query = self.model.query_active()
         # 动态添加过滤条件
         if filters:
             for field, value in filters.items():
@@ -73,12 +73,15 @@ class BaseService:
         instance = self.get(id)
         if not instance:
             return None
-        if soft and hasattr(instance, "deleted_at"):
-            from time import time
+        try:
+            if soft and hasattr(instance, "deleted_at"):
+                from time import time
 
-            instance.deleted_at = int(time())
-        else:
-            db.session.delete(instance)
-        db.session.commit()
-
-        return instance
+                instance.deleted_at = int(time())
+            else:
+                db.session.delete(instance)
+            db.session.commit()
+            return True
+        except Exception as e:
+            db.session.rollback()
+            return False
