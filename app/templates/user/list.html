@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 
 {% block css %}
-<link href="{{ url_for('static', filename='static/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+<!-- <link href="{{ url_for('static', filename='static/css/jquery.dataTables.min.css') }}" rel="stylesheet"> -->
+<style>
+	.disabled-link {
+		pointer-events: none;
+		cursor: default;
+		/* 可选：更改鼠标样式 */
+		color: gray;
+		/* 可选：改变颜色，使其看起来被禁用 */
+	}
+</style>
 {% endblock %}
 
 
@@ -9,39 +18,32 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-xl-12">
-			<div class="d-flex mb-4 justify-content-between align-items-center flex-wrap">
-				<div class="card-tabs mt-3 mt-sm-0 mb-xxl-0 mb-4">
-					<ul class="nav nav-tabs" role="tablist">
-						<li class="nav-item">
-							<a class="nav-link active" data-bs-toggle="tab" href="#All" role="tab">All Guest
-								(216)</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-bs-toggle="tab" href="#Pending" role="tab">Pending</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-bs-toggle="tab" href="#Booked" role="tab">Booked</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-bs-toggle="tab" href="#Canceled" role="tab">Canceled</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-bs-toggle="tab" href="#Refund" role="tab">Refund</a>
-						</li>
-					</ul>
-				</div>
-				<div class="table-search">
-					<div class="input-group search-area mb-xxl-0 mb-4">
-						<input type="text" class="form-control" placeholder="Search here">
-						<span class="input-group-text"><a href="javascript:void(0)"><i
-									class="flaticon-381-search-2"></i></a></span>
+			<div class="d-flex mb-1 justify-content-between align-items-center flex-wrap">
+				<div class="table-search d-flex gap-2">
+					<div class="input-group search-area mb-xxl-0 mb-2">
+						<input type="text" class="form-control" placeholder="用户名">
+					</div>
+					<div class="input-group search-area mb-xxl-0 mb-2">
+						<input type="text" class="form-control" placeholder="邮箱">
+					</div>
+					<div class="input-group search-area mb-xxl-0 mb-2">
+						<input type="text" class="form-control" placeholder="手机">
+					</div>
+					<div class="input-group search-area mb-xxl-0 mb-2">
+						<select class="default-select form-control wide">
+							<option value="">选择类别</option>
+							<option value="1">选项一</option>
+							<option value="2">选项二</option>
+							<option value="3">选项三</option>
+						</select>
+					</div>
+					<div class="input-group search-area mb-xxl-0 mb-2">
+						<button type="button" class="btn btn-sm btn-primary flex-shrink-0">搜索</button>
 					</div>
 				</div>
-				<a href="javascript:void(0);" class="btn btn-primary mb-xxl-0 mb-4 "><i
-						class="far fa-file-word me-2"></i>Generate Report</a>
 			</div>
 			<div class="tab-content">
-				<div class="tab-pane active show" id="All">
+				<div class="tab-pane active show">
 					<div class="table-responsive">
 						<table class="table card-table default-table display mb-4 dataTablesCard table-responsive-xl "
 							id="guestTable-all">
@@ -52,1298 +54,33 @@
 											<input class="form-check-input" type="checkbox" value="" id="checkAll">
 										</div>
 									</th>
-									<th>Guest</th>
-									<th>Date Order</th>
-									<th>Check In</th>
-									<th>Check Out</th>
-									<th>Special Request</th>
-									<th>Room Type</th>
-									<th>Status</th>
-									<th class="bg-none"></th>
+									<th>编号/用户名</th>
+									<th>邮箱</th>
+									<th>手机</th>
+									<th>状态</th>
+									<th>注册时间</th>
+									<th>操作</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/1.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Yonna</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-danger">Refund</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/2.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black" href="guest-detail.html">Mr.
-														John Kipli</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-dark">Canceled</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/3.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Roberto Cr.</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link disabled">No
-											Request</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-success">Booked</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/4.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Tonni Sblak</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link disabled">No
-											Request</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-success">Booked</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/5.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Keanu Repes</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-warning">Pending</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/62.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Monalisa</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link disabled">No
-											Request</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-success">Booked</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/4.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Tonni Sblak</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link disabled">No
-											Request</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-success">Booked</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/5.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Keanu Repes</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-warning">Pending</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/62.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Monalisa</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link disabled">No
-											Request</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-success">Booked</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/4.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Tonni Sblak</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link disabled">No
-											Request</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-success">Booked</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/5.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Keanu Repes</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-warning">Pending</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/62.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Monalisa</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link disabled">No
-											Request</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-success">Booked</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
+							<tbody id="data-table">
+
 							</tbody>
 						</table>
-					</div>
-				</div>
-				<div class="tab-pane fade" id="Pending">
-					<div class="table-responsive">
-						<table class="table card-table default-table display mb-4 dataTablesCard table-responsive-xl "
-							id="guestTable-all">
-							<thead>
-								<tr>
-									<th class="bg-none">
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="" id="checkAll">
-										</div>
-									</th>
-									<th>Guest</th>
-									<th>Date Order</th>
-									<th>Check In</th>
-									<th>Check Out</th>
-									<th>Special Request</th>
-									<th>Room Type</th>
-									<th>Status</th>
-									<th class="bg-none"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/1.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Yonna</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-danger">Refund</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="tab-pane fade" id="Canceled">
-					<div class="table-responsive">
-						<table class="table card-table default-table display mb-4 dataTablesCard table-responsive-xl "
-							id="guestTable-all">
-							<thead>
-								<tr>
-									<th class="bg-none">
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="" id="checkAll">
-										</div>
-									</th>
-									<th>Guest</th>
-									<th>Date Order</th>
-									<th>Check In</th>
-									<th>Check Out</th>
-									<th>Special Request</th>
-									<th>Room Type</th>
-									<th>Status</th>
-									<th class="bg-none"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/1.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Yonna</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-danger">Refund</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="tab-pane fade" id="Refund">
-					<div class="table-responsive">
-						<table class="table card-table default-table display mb-4 dataTablesCard table-responsive-xl "
-							id="guestTable-all">
-							<thead>
-								<tr>
-									<th class="bg-none">
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="" id="checkAll">
-										</div>
-									</th>
-									<th>Guest</th>
-									<th>Date Order</th>
-									<th>Check In</th>
-									<th>Check Out</th>
-									<th>Special Request</th>
-									<th>Room Type</th>
-									<th>Status</th>
-									<th class="bg-none"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/1.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Yonna</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-danger">Refund</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="tab-pane fade" id="Booked">
-					<div class="table-responsive">
-						<table class="table card-table default-table display mb-4 dataTablesCard table-responsive-xl "
-							id="guestTable-all">
-							<thead>
-								<tr>
-									<th class="bg-none">
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="" id="checkAll">
-										</div>
-									</th>
-									<th>Guest</th>
-									<th>Date Order</th>
-									<th>Check In</th>
-									<th>Check Out</th>
-									<th>Special Request</th>
-									<th>Room Type</th>
-									<th>Status</th>
-									<th class="bg-none"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>
-										<div class="form-check style-1">
-											<input class="form-check-input" type="checkbox" value="">
-										</div>
-									</td>
-									<td>
-										<div class="media-bx">
-											<img class="me-3 rounded"
-												src="{{ url_for('static', filename='static/picture/1.jpg') }}" alt="">
-											<div>
-												<span class="text-primary">#GS-2234</span>
-												<h4 class="mb-0 mt-1"><a class="text-black"
-														href="guest-detail.html">Yonna</a></h4>
-											</div>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Sunday, Oct 24th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 29th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td>
-										<div>
-											<h5>Oct 31th, 2020</h5>
-											<span class="fs-14">08:29 AM</span>
-										</div>
-									</td>
-									<td><a href="javascript:void(0);" class="btn-link">View Notes</a></td>
-									<td>
-										<div>
-											<h5>Queen A-2345</h5>
-											<span class="fs-14">Room No. 0024</span>
-										</div>
-									</td>
-									<td><span class="text-danger">Refund</span></td>
-									<td>
-										<div class="dropdown dropstart">
-											<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
-												aria-expanded="false">
-												<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
-													xmlns="http://www.w3.org/2000/svg">
-													<path
-														d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-													<path
-														d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
-														stroke="#262626" stroke-width="2" stroke-linecap="round"
-														stroke-linejoin="round">
-													</path>
-												</svg>
-											</a>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-												<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<ul class="pagination pagination-circle" id="data-pages">
+							<li class="page-item page-indicator">
+								<a class="page-link" href="javascript:void(0)">
+									<i class="la la-angle-left"></i></a>
+							</li>
+							<li class="page-item active"><a class="page-link" href="javascript:void(0)">1</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
+							<li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+							<li class="page-item"><a class="page-link" href="javascript:void(0)">4</a></li>
+							<li class="page-item page-indicator">
+								<a class="page-link" href="javascript:void(0)">
+									<i class="la la-angle-right"></i></a>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -1353,8 +90,136 @@
 {% endblock %}
 
 {% block js %}
-<!-- Datatable -->
-<script src="{{ url_for('static', filename='static/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ url_for('static', filename='static/js/datatables.init.js') }}"></script>
+<!-- Required vendors -->
+<script src="{{ url_for('static', filename='static/js/global.min.js') }}"></script>
+<script src="{{ url_for('static', filename='static/js/jquery.nice-select.min.js') }}"></script>
 
+<!-- Datatable -->
+<!-- <script src="{{ url_for('static', filename='static/js/jquery.dataTables.min.js') }}"></script> -->
+<!-- <script src="{{ url_for('static', filename='static/js/datatables.init.js') }}"></script> -->
+
+<script src="{{ url_for('static', filename='static/js/custom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='static/js/deznav-init.js') }}"></script>
+<script src="{{ url_for('static', filename='static/js/demo.js') }}"></script>
+<script src="{{ url_for('static', filename='static/js/styleSwitcher.js') }}"></script>
+<script>
+
+	function renderPages(page = 1) {
+		$.ajax({
+			url: "/user/?page=" + page,
+		}).done(function (res) {
+			console.log(res);
+			let data = res.data;
+			let tr = "";
+			let pre_page = data.page - 1;
+			let next_page = data.page + 1;
+			let pre_disabled = "";
+			let next_disabled = "";
+			if (data.page == 1) {
+				pre_page = 1;
+				pre_disabled = "disabled-link";
+			}
+			if (next_page > data.max_page) {
+				next_page = data.max_page;
+				next_disabled = "disabled-link";
+			}
+
+			let pages = `<li class="page-item page-indicator ${pre_disabled}">
+							<a class="page-link" href="javascript:void(0)" data-index="${pre_page}">
+								<i class="la la-angle-left"></i></a>
+						</li>`;
+			for (let i = 0; i < data.items.length; i++) {
+				tr += `<tr>
+						<td>
+							<div class="form-check style-1">
+								<input class="form-check-input" type="checkbox" value="">
+							</div>
+						</td>
+						<td>
+							<div class="media-bx">
+								<img class="me-3 rounded"
+									src="{{ url_for('static', filename='static/picture/1.jpg') }}" alt="">
+								<div>
+									<span class="text-primary">#` + data.items[i].id + `</span>
+									<h4 class="mb-0 mt-1"><a class="text-black"
+											href="guest-detail.html">` + data.items[i].username + `</a></h4>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div>
+								<h5>` + data.items[i].email + `</h5>
+							</div>
+						</td>
+						<td>
+							<div>
+								<h5>` + data.items[i].phone + `</h5>
+							</div>
+						</td>
+						<td>
+							<div>
+								<h5>正常</h5>
+							</div>
+						</td>
+						<td><h5>` + data.items[i].created_at + `</h5></td>
+						<td>
+							<div class="dropdown dropstart">
+								<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown"
+									aria-expanded="false">
+									<svg width="24" height="24" viewbox="0 0 24 24" fill="none"
+										xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z"
+											stroke="#262626" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round">
+										</path>
+										<path
+											d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z"
+											stroke="#262626" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round">
+										</path>
+										<path
+											d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z"
+											stroke="#262626" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round">
+										</path>
+									</svg>
+								</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="javascript:void(0);">Edit</a>
+									<a class="dropdown-item" href="javascript:void(0);">Delete</a>
+								</div>
+							</div>
+						</td>
+					</tr>`;
+				// console.log(data.items[i])
+			}
+			for (let i = 0; i < data.pages.length; i++) {
+				let active = "";
+				let disabled = "";
+				if (data.pages[i] == data.page) {
+					active = "active";
+				}
+				if (data.pages[i] == "...") {
+					disabled = "disabled-link";
+				}
+				pages += `<li class="page-item ${active} ${disabled}"><a class="page-link" href="javascript:void(0)" data-index="${data.pages[i]}">${data.pages[i]}</a></li>`;
+			}
+
+			pages += `<li class="page-item page-indicator ${next_disabled}">
+						<a class="page-link" href="javascript:void(0)" data-index="${next_page}">
+							<i class="la la-angle-right"></i></a>
+					</li>`;
+			$("#data-table").html(tr);
+			$("#data-pages").html(pages);
+		});
+	}
+
+	renderPages();
+	$("#data-pages").on("click", ".page-link", function (event) {
+		let page = $(this).data("index");
+		renderPages(page);
+		// console.log(page);
+	})
+</script>
 {% endblock %}
