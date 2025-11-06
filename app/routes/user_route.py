@@ -12,9 +12,14 @@ user_bp = Blueprint("user", __name__, url_prefix="/user")
 service = UserService()
 
 
-@user_bp.route("/list.html")
-def user_tpl():
+@user_bp.route("/list.html", methods=["GET"])
+def list_tpl():
     return render_template("/user/list.html")
+
+
+@user_bp.route("/edit.html", methods=["GET"])
+def edit_tpl():
+    return render_template("/user/edit.html")
 
 
 @user_bp.route("/", methods=["GET"])
