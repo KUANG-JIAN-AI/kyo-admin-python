@@ -22,6 +22,22 @@ def edit_tpl():
     return render_template("/user/edit.html")
 
 
+@user_bp.route("/<int:id>", methods=["GET"])
+def get_user(id):
+    result = service.get(id)
+    if not result:
+        return jsonify({"code": 404, "msg": "not found"})
+
+    return jsonify({"code": 200, "msg": "success", "data": result.to_dict()})
+
+
+@user_bp.route("/<int:id>", methods=["PUT"])
+def edit_user(id):
+    payload = request.get_json()
+    service.update(id, **payload)
+    return jsonify({"code": 200, "msg": "更新成功"})
+
+
 @user_bp.route("/", methods=["GET"])
 def list_users():
     page = int(request.args.get("page", 1))

@@ -1,10 +1,11 @@
 # app/models/user_models.py
 import time
 from app import db
+from app.models.base_model import BaseModel
 from app.utils import format_time
 
 
-class User(db.Model):
+class User(BaseModel):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)

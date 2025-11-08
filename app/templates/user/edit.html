@@ -11,30 +11,34 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Form Label Size</h4>
+                    <h4 class="card-title">编辑用户</h4>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <form>
+                        <form id="data-edit">
                             <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+                                <label class="col-sm-2 col-form-label col-form-label-lg">用户名</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control form-control-sm"
-                                        placeholder="col-form-label-sm">
+                                    <input type="text" name="username" class="form-control form-control-lg"
+                                        placeholder="请输入用户名">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label">Email</label>
+                                <label class="col-sm-2 col-form-label col-form-label-lg">邮箱</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" placeholder="col-form-label">
+                                    <input type="email" name="email" class="form-control form-control-lg"
+                                        placeholder="请输入邮箱">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label col-form-label-lg">Email</label>
+                                <label class="col-sm-2 col-form-label col-form-label-lg">手机</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control form-control-lg"
-                                        placeholder="col-form-label-lg">
+                                    <input type="phone" name="phone" class="form-control form-control-lg"
+                                        placeholder="请输入手机">
                                 </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <button type="submit" class="btn btn-sm btn-primary">保存</button>
                             </div>
                         </form>
                     </div>
@@ -49,13 +53,52 @@
 <!-- Required vendors -->
 <script src="{{ url_for('static', filename='static/js/global.min.js') }}"></script>
 <script src="{{ url_for('static', filename='static/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ url_for('static', filename='static/js/sweetalert2@11.js') }}"></script>
 
 <script src="{{ url_for('static', filename='static/js/custom.min.js') }}"></script>
 <script src="{{ url_for('static', filename='static/js/deznav-init.js') }}"></script>
 <script src="{{ url_for('static', filename='static/js/demo.js') }}"></script>
 <script src="{{ url_for('static', filename='static/js/styleSwitcher.js') }}"></script>
 <script>
+    function getUrlParam(name) {
+        const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+        const r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURIComponent(r[2]);
+        return null;
+    }
 
+    // 使用示例
+    const id = getUrlParam('id');
+
+    $.ajax({
+        url: "/user/" + id,
+    }).done(function (res) {
+        let data = res.data;
+        for (let key in data) {
+            $(`[name="${key}"]`).val(data[key]);
+        }
+    });
+
+    $("#data-edit").on("submit", function (e) {
+        e.preventDefault();
+
+        // 如果你想转成对象
+        const obj = {};
+        $(this).serializeArray().forEach(item => obj[item.name] = item.value);
+        $.ajax({
+            url: "/user/" + id,
+            type: "PUT",
+            dataType: "JSON",
+            contentType: "application/json",
+            data: JSON.stringify(obj)
+        }).done(function (res) {
+            Swal.fire({
+                // title: "Deleted!",
+                text: res.msg,
+                icon: "success"
+            });
+        });
+    });
 
 
 </script>
