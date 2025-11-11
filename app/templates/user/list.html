@@ -106,7 +106,8 @@
 <script>
 
 	let search = "";
-	function renderPages(page = 1, filters = "") {
+	let this_page = 1;
+	function renderPages(page = this_page, filters = "") {
 		$.ajax({
 			url: "/user/?page=" + page + "&" + filters,
 		}).done(function (res) {
@@ -187,7 +188,7 @@
 									</svg>
 								</a>
 								<div class="dropdown-menu">
-									<a class="dropdown-item edit" data-index="${data.items[i].id}" href="/user/edit.html?id=${data.items[i].id}">编辑</a>
+									<a class="dropdown-item edit" data-index="${data.items[i].id}" href="javascript:void(0);">编辑</a>
 									<a class="dropdown-item delete" data-index="${data.items[i].id}" href="javascript:void(0);">删除</a>
 								</div>
 							</div>
@@ -218,8 +219,8 @@
 
 	renderPages();
 	$("#data-pages").on("click", ".page-link", function (event) {
-		let page = $(this).data("index");
-		renderPages(page, search);
+		this_page = $(this).data("index");
+		renderPages(this_page, search);
 	})
 
 	$("#data-table").on("click", ".delete", function (event) {
@@ -244,45 +245,39 @@
 						text: res.msg,
 						icon: "success"
 					});
-					renderPages(1, search);
+					renderPages(this_page, search);
 				})
 			}
 		});
 	});
 
-	// $("#data-table").on("click", ".edit", function (event) {
-	// 	let id = $(this).data("index");
-	// 	Swal.fire({
-	// 		title: "确定删除吗？",
-	// 		text: "删除后不可撤销！",
-	// 		icon: "warning",
-	// 		showCancelButton: true,
-	// 		confirmButtonColor: "#3085d6",
-	// 		cancelButtonColor: "#d33",
-	// 		confirmButtonText: "确定",
-	// 		cancelButtonText: "取消",
-	// 	}).then((result) => {
-	// 		if (result.isConfirmed) {
-	// 			$.ajax({
-	// 				url: "/user/" + id,
-	// 			}).done(function (res) {
-	// 				Swal.fire({
-	// 					// title: "Deleted!",
-	// 					text: res.msg,
-	// 					icon: "success"
-	// 				});
-	// 				renderPages(1, search);
-	// 			})
-	// 		}
-	// 	});
-	// });
+	$("#data-table").on("click", ".edit", function (event) {
+		let id = $(this).data("index");
+		Swal.fire({
+			title: "编辑用户",
+			width: 800,
+			html: `
+    <iframe src="http://127.0.0.1:5000/user/edit.html?id=${id}" width="100%" height="400px" style="border: none;"></iframe>
+  `,
+			showCloseButton: true,
+			showConfirmButton: false,
+			allowOutsideClick: false, // 🚫 禁止点击弹窗外关闭
+		}).then((result) => {
+			// ⚡ 判断用户是如何关闭弹窗的
+			if (result.isDismissed && result.dismiss === Swal.DismissReason.close) {
+				renderPages(this_page, search);
+			}
+		});;
+
+	});
 
 	$("#data-search").on("submit", function (e) {
 		e.preventDefault();
 
 		// serialize() 将表单序列化为字符串
 		search = $(this).serialize();
-		renderPages(1, search);
+		this_page = 1;
+		renderPages(this_page, search);
 	});
 </script>
 {% endblock %}
