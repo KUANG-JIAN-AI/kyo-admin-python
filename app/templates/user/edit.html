@@ -16,28 +16,42 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <form id="data-edit">
-                            <div class="mb-3 row">
+                            <div class="input-group mb-3 row">
                                 <label class="col-sm-2 col-form-label col-form-label-lg">用户名</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="username" class="form-control form-control-lg"
                                         placeholder="请输入用户名">
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="input-group mb-3 row">
                                 <label class="col-sm-2 col-form-label col-form-label-lg">邮箱</label>
                                 <div class="col-sm-10">
                                     <input type="email" name="email" class="form-control form-control-lg"
                                         placeholder="请输入邮箱">
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="input-group mb-3 row">
                                 <label class="col-sm-2 col-form-label col-form-label-lg">手机</label>
                                 <div class="col-sm-10">
                                     <input type="phone" name="phone" class="form-control form-control-lg"
                                         placeholder="请输入手机">
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="input-group mb-3 row">
+                                <label class="col-sm-2 col-form-label col-form-label-lg">照片</label>
+                                <div class="col-sm-10">
+                                    <img src="" id="avatar-img" style="width: 150px; height: 150px;" alt="这是照片">
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <!-- <label class="col-sm-2 col-form-label col-form-label-lg">照片</label> -->
+                                <div class="form-file col-sm-10">
+                                    <input type="file" id="fileInput" class="form-file-input form-control">
+                                    <input type="hidden" name="avatar" id="avatar">
+                                </div>
+                                <button type="button" class="input-group-text upload-image">上传照片</button>
+                            </div>
+                            <div class="input-group mb-3 row">
                                 <button type="submit" class="btn btn-sm btn-primary">保存</button>
                             </div>
                         </form>
@@ -77,6 +91,7 @@
         for (let key in data) {
             $(`[name="${key}"]`).val(data[key]);
         }
+        $("#avatar-img").attr("src", data.avatar);
     });
 
     $("#data-edit").on("submit", function (e) {
@@ -100,6 +115,35 @@
         });
     });
 
+    $(".upload-image").on("click", function (event) {
+        let formData = new FormData();
+        formData.append("file", $("#fileInput")[0].files[0]);
+        $.ajax({
+            url: "/upload",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                if (res.code == 200) {
+                    $("#avatar").val(res.url);
+                    $("#avatar-img").attr("src", res.url);
+                    Swal.fire({
+                        // title: "Deleted!",
+                        text: res.msg,
+                        icon: "success"
+                    });
+                } else {
+                    Swal.fire({
+                        // title: "Deleted!",
+                        text: res.msg,
+                        icon: "error"
+                    });
+                }
+            }
+        });
+
+    });
 
 </script>
 {% endblock %}
